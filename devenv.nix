@@ -9,22 +9,18 @@
   # 1. Enable Python
   languages.python = {
     enable = true;
-    version = "3.13"; # Or "3.12"
-
-    # If you ever decide to add external libraries (like Pillow for images),
-    # you can add them here without messing with pip manually.
-    # venv.enable = true;
-    # venv.requirements = ''
-    #   requests
-    # '';
+    version = "3.13";
   };
+
+  # Add the Google GenAI SDK
+  packages = [ pkgs.python313Packages.google-genai ];
 
   # 2. Define the script wrapper
   scripts.extract-recipes.exec = "python main.py $@";
 
-  # 3. Code Quality (Optional but recommended)
-  pre-commit.hooks = {
-    black.enable = true; # Auto-format python code
+  # Optional: specific pre-commit hooks for both languages
+  git-hooks.hooks = {
+    black.enable = true; # Python formatter
     trim-trailing-whitespace.enable = true;
   };
 
@@ -34,3 +30,4 @@
     echo "Run 'extract-recipes <file.paprikarecipes>' to start."
   '';
 }
+
